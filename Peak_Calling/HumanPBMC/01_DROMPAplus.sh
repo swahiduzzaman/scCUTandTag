@@ -10,6 +10,7 @@ b" "cd4t" "cd8t" "dc" "mono" "nk" "other" "othert
 
 conda activate PeakCalling_analysis
 #HM1=H3K27ac
+# bedGraphDir="/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/HM1"
 parse2wig+ -i control_not_B_sorted.bam  -o input.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i treatment_B_sorted.bam  -o H3K27ac.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i control_not_CD4_T_sorted.bam  -o input.cd4t  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
@@ -28,6 +29,7 @@ parse2wig+ -i control_other_T_sorted.bam  -o input.othert --pair --gt ~/project_
 parse2wig+ -i treatment_other_T_sorted.bam  -o H3K27ac.othert --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 
 #HM2=H3K27me3
+# bedGraphDir="/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/HM2"
 parse2wig+ -i control_not_B_sorted.bam  -o input.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i treatment_B_sorted.bam  -o H3K27me3.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i control_not_CD4_T_sorted.bam  -o input.cd4t  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
@@ -48,6 +50,7 @@ parse2wig+ -i treatment_other_T_sorted.bam  -o H3K27me3.othert --pair --gt ~/pro
 
 
 #HM3=H3K4me1
+# bedGraphDir="/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/HM3"
 parse2wig+ -i control_not_B_sorted.bam  -o input.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i treatment_B_sorted.bam  -o H3K4me1.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i control_not_CD4_T_sorted.bam  -o input.cd4t  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
@@ -68,6 +71,7 @@ parse2wig+ -i treatment_other_T_sorted.bam  -o H3K4me1.othert --pair --gt ~/proj
 
 
 #HM4=H3K4me2
+# bedGraphDir="/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/HM4"
 parse2wig+ -i control_not_B_sorted.bam  -o input.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i treatment_B_sorted.bam  -o H3K4me2.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i control_not_CD4_T_sorted.bam  -o input.cd4t  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
@@ -87,6 +91,7 @@ parse2wig+ -i treatment_other_T_sorted.bam  -o H3K4me2.othert --pair --gt ~/proj
 
 
 #HM5=H3K4me3
+# bedGraphDir="/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/HM5"
 parse2wig+ -i control_not_B_sorted.bam  -o input.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i treatment_B_sorted.bam  -o H3K4me3.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i control_not_CD4_T_sorted.bam  -o input.cd4t  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
@@ -107,6 +112,7 @@ parse2wig+ -i treatment_other_T_sorted.bam  -o H3K4me3.othert --pair --gt ~/proj
 
 
 #HM6=H3K9me3
+# bedGraphDir="/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/HM6"
 parse2wig+ -i control_not_B_sorted.bam  -o input.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i treatment_B_sorted.bam  -o H3K9me3.b  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
 parse2wig+ -i control_not_CD4_T_sorted.bam  -o input.cd4t  --pair --gt ~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt -n GR
