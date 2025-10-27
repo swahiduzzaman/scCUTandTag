@@ -88,12 +88,12 @@ write_pe_sam <- function(df, outfile) {
     read_id <- paste0(row$cell, "_", i)
     chr <- row$chr
     start1 <- format(as.integer(row$start) + 1, scientific = FALSE)
-    start2 <- format(as.integer(row$end) - 30, scientific = FALSE)
+    start2 <- format(as.integer(row$end) - 50, scientific = FALSE)
     if (as.integer(start2) < 1) start2 <- 1
     flag1 <- 99
     flag2 <- 147
-    r1 <- paste(read_id, flag1, chr, start1, 255, "30M", "=", start2, as.integer(start2) - as.integer(start1), "*", "*", sep = "\t")
-    r2 <- paste(read_id, flag2, chr, start2, 255, "30M", "=", start1, as.integer(start1) - as.integer(start2), "*", "*", sep = "\t")
+    r1 <- paste(read_id, flag1, chr, start1, 255, "50M", "=", start2, as.integer(start2) - as.integer(start1), "*", "*", sep = "\t")
+    r2 <- paste(read_id, flag2, chr, start2, 255, "50M", "=", start1, as.integer(start1) - as.integer(start2), "*", "*", sep = "\t")
     c(r1, r2)
   })
   writeLines(c(header, unlist(sam_lines)), con = outfile)
@@ -244,12 +244,12 @@ write_pe_sam <- function(df, outfile) {
     read_id <- paste0(row$cell, "_", i)
     chr <- row$chr
     start1 <- format(as.integer(row$start) + 1, scientific = FALSE)
-    start2 <- format(as.integer(row$end) - 30, scientific = FALSE)
+    start2 <- format(as.integer(row$end) - 50, scientific = FALSE)
     if (as.integer(start2) < 1) start2 <- 1
     flag1 <- 99
     flag2 <- 147
-    r1 <- paste(read_id, flag1, chr, start1, 255, "30M", "=", start2, as.integer(start2) - as.integer(start1), "*", "*", sep = "\t")
-    r2 <- paste(read_id, flag2, chr, start2, 255, "30M", "=", start1, as.integer(start1) - as.integer(start2), "*", "*", sep = "\t")
+    r1 <- paste(read_id, flag1, chr, start1, 255, "50M", "=", start2, as.integer(start2) - as.integer(start1), "*", "*", sep = "\t")
+    r2 <- paste(read_id, flag2, chr, start2, 255, "50M", "=", start1, as.integer(start1) - as.integer(start2), "*", "*", sep = "\t")
     c(r1, r2)
   })
   writeLines(c(header, unlist(sam_lines)), con = outfile)
@@ -396,12 +396,12 @@ write_pe_sam <- function(df, outfile) {
     read_id <- paste0(row$cell, "_", i)
     chr <- row$chr
     start1 <- format(as.integer(row$start) + 1, scientific = FALSE)
-    start2 <- format(as.integer(row$end) - 30, scientific = FALSE)
+    start2 <- format(as.integer(row$end) - 50, scientific = FALSE)
     if (as.integer(start2) < 1) start2 <- 1
     flag1 <- 99
     flag2 <- 147
-    r1 <- paste(read_id, flag1, chr, start1, 255, "30M", "=", start2, as.integer(start2) - as.integer(start1), "*", "*", sep = "\t")
-    r2 <- paste(read_id, flag2, chr, start2, 255, "30M", "=", start1, as.integer(start1) - as.integer(start2), "*", "*", sep = "\t")
+    r1 <- paste(read_id, flag1, chr, start1, 255, "50M", "=", start2, as.integer(start2) - as.integer(start1), "*", "*", sep = "\t")
+    r2 <- paste(read_id, flag2, chr, start2, 255, "50M", "=", start1, as.integer(start1) - as.integer(start2), "*", "*", sep = "\t")
     c(r1, r2)
   })
   writeLines(c(header, unlist(sam_lines)), con = outfile)
