@@ -1,7 +1,7 @@
 ###############################################################################
 #### FINAL: Mouse Brain Data Random Subsets for All HMs and TF
 #### Author: Md. Wahiduzzaman | Date: 2025-10-11
-#### Mouse Data: GSE157637 - mm10 genome 
+#### Mouse Data: - mm10 genome 
 #### H3K27ac , H3K27me3, H3K36me3, H3K4me3, Olig2 and Rad21 has # cells
 #### 10414 , 13932, 4350, 13739, 4544, and 4375 respectively
 ###############################################################################
@@ -16,10 +16,10 @@ histones<-c("H3K27ac", "H3K27me3", "H3K36me3", "H3K4me3", "Olig2", "Rad21")
 for(hist in histones){
 # --- Configuration for MOUSE data ---
 CONFIG <- list(
-  seurat_rds = paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/", hist, "_seurat_object.Rds"),
-  fragment_path = paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/", hist, "_fragments.tsv.gz"),
-  genome_file = "/home/wahid/project_scHMTF/GSE157637_processed_data/ref/mm10.genome",
-  output_dir = "/home/wahid/project_scHMTF/GSE157637_processed_data/BAM/random_subsets_final_all_histones",  # ✅ FIXED PATH
+  seurat_rds = paste0("/home/wahid/project_scHMTF/mm_processed_data/", hist, "_seurat_object.Rds"),
+  fragment_path = paste0("/home/wahid/project_scHMTF/mm_processed_data/", hist, "_fragments.tsv.gz"),
+  genome_file = "/home/wahid/project_scHMTF/mm_processed_data/ref/mm10.genome",
+  output_dir = "/home/wahid/project_scHMTF/mm_processed_data/BAM/random_subsets_final_all_histones",  # ✅ FIXED PATH
   seed = 2025,
   percent_steps = seq(10, 100, by = 10),
   min_fragment_length = 50,
