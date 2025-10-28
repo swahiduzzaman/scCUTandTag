@@ -27,17 +27,17 @@ histones<-c("H3K27ac", "H3K27me3", "H3K4me1", "H3K4me2", "H3K4me3", "H3K9me3")
 
 for(hist in histones){
 
-histone <- readRDS(paste0("/home/wahid/project_scHMTF/GSE195725_processed_data/", hist, ".rds"))
+histone <- readRDS(paste0("/home/wahid/project_scHMTF/hs_processed_data/", hist, ".rds"))
 # --- 2. Read and create Fragment object ---
 fragments <- CreateFragmentObject(
-  path = paste0("/home/wahid/project_scHMTF/GSE195725_processed_data/", hist, "_fragments.tsv.gz"),
+  path = paste0("/home/wahid/project_scHMTF/hs_processed_data/", hist, "_fragments.tsv.gz"),
   cells = colnames(histone)
 )
 # --- 3. Create new ChromatinAssay and reassign it to object ---
 library(GenomeInfoDb)
 
 # Read your genome file (chromosome sizes)
-genome_file <- "/home/wahid/project_scHMTF/GSE195725_processed_data/ref/hg38.genome"
+genome_file <- "/home/wahid/project_scHMTF/hs_processed_data/ref/hg38.genome"
 chrom_sizes <- read.table(genome_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
 colnames(chrom_sizes) <- c("seqnames", "seqlengths")
 
@@ -75,8 +75,8 @@ colnames(frags) <- c("chr", "start", "end", "cell", "score")
 
 # === 2. Output directory ===
 
-## "/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/HM1"
-outdir <- paste0("/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/celltypeswisebam_l1/",hist)
+## "/home/wahid/project_scHMTF/hs_processed_data/BAM/celltypeswisebam_l1/HM1"
+outdir <- paste0("/home/wahid/project_scHMTF/hs_processed_data/BAM/celltypeswisebam_l1/",hist)
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 # === 4. Paired-end SAM writer ===
@@ -152,12 +152,12 @@ library(GenomeInfoDb)
 histones<-c("H3K27ac", "H3K27me3", "H3K36me3", "H3K4me3")
 for(hist in histones){
 # --- 1. Read in the Seurat object ---
-histone <- readRDS(paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/", hist,"_seurat_object.Rds"))
+histone <- readRDS(paste0("/home/wahid/project_scHMTF/mm_processed_data/", hist,"_seurat_object.Rds"))
 histone <- UpdateSeuratObject(histone)
 
 # --- 2. Read and create Fragment object ---
 fragments <- CreateFragmentObject(
-  path = paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/", hist, "_fragments.tsv.gz"),
+  path = paste0("/home/wahid/project_scHMTF/mm_processed_data/", hist, "_fragments.tsv.gz"),
   cells = colnames(histone)
 )
 
@@ -165,7 +165,7 @@ fragments <- CreateFragmentObject(
 
 
 # Read your genome file (chromosome sizes)
-genome_file <- "/home/wahid/project_scHMTF/GSE157637_processed_data/ref/mm10.genome"
+genome_file <- "/home/wahid/project_scHMTF/mm_processed_data/ref/mm10.genome"
 chrom_sizes <- read.table(genome_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
 colnames(chrom_sizes) <- c("seqnames", "seqlengths")
 
@@ -201,10 +201,10 @@ frags <- fread(
 colnames(frags) <- c("chr", "start", "end", "cell", "score")
 
 # === 2. Output directory ===
-### NOTE for my work /home/wahid/project_scHMTF/GSE157637_processed_data/result/sccuttag_cellcluster/HM3
+### NOTE for my work /home/wahid/project_scHMTF/mm_processed_data/result/sccuttag_cellcluster/HM3
 ### I did HM1=H3K27ac, HM2=H3K27me3, H3K36me3=HM3, HM4=H3K4me3
 
-outdir <- paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/result/sccuttag_cellcluster/", hist)
+outdir <- paste0("/home/wahid/project_scHMTF/mm_processed_data/result/sccuttag_cellcluster/", hist)
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 
@@ -306,18 +306,18 @@ transcriptionalfactors<-c("Olig2", "Rad21")
 #############################################################################################################################
 
 for(TF in transcriptionalfactors){
-transcription <- readRDS(paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/", TF, "_seurat_object.Rds"))
+transcription <- readRDS(paste0("/home/wahid/project_scHMTF/mm_processed_data/", TF, "_seurat_object.Rds"))
 transcription <- UpdateSeuratObject(transcription)
 
 # --- 2. Read and create Fragment object ---
 fragments <- CreateFragmentObject(
-  path = paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/", TF, "_fragments.tsv.gz"),
+  path = paste0("/home/wahid/project_scHMTF/mm_processed_data/", TF, "_fragments.tsv.gz"),
   cells = colnames(transcription)
 )
 
 # --- 3. Create new ChromatinAssay and reassign it to object ---
 # Read your genome file (chromosome sizes)
-genome_file <- "/home/wahid/project_scHMTF/GSE157637_processed_data/ref/mm10.genome"
+genome_file <- "/home/wahid/project_scHMTF/mm_processed_data/ref/mm10.genome"
 chrom_sizes <- read.table(genome_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
 colnames(chrom_sizes) <- c("seqnames", "seqlengths")
 
@@ -356,7 +356,7 @@ colnames(frags) <- c("chr", "start", "end", "cell", "score")
 ######################################
 # === 2. Output directory ===
 ######################################
-outdir <- paste0("/home/wahid/project_scHMTF/GSE157637_processed_data/result/sccuttag_cellcluster/", TF)
+outdir <- paste0("/home/wahid/project_scHMTF/mm_processed_data/result/sccuttag_cellcluster/", TF)
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 
