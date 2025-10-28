@@ -21,10 +21,10 @@ for(hist in histones){
   
   # --- Configuration ---
   CONFIG <- list(
-    seurat_rds = paste0("/home/wahid/project_scHMTF/GSE195725_processed_data/", hist, ".rds"),
-    fragment_path = paste0("/home/wahid/project_scHMTF/GSE195725_processed_data/", hist, "_fragments.tsv.gz"),
-    genome_file = "/home/wahid/project_scHMTF/GSE195725_processed_data/ref/hg38.genome",
-    output_dir = "/home/wahid/project_scHMTF/GSE195725_processed_data/BAM/random_subsets_final_all_histones",
+    seurat_rds = paste0("/home/wahid/project_scHMTF/hs_processed_data/", hist, ".rds"),
+    fragment_path = paste0("/home/wahid/project_scHMTF/hs_processed_data/", hist, "_fragments.tsv.gz"),
+    genome_file = "/home/wahid/project_scHMTF/hs_processed_data/ref/hg38.genome",
+    output_dir = "/home/wahid/project_scHMTF/hs_processed_data/BAM/random_subsets_final_all_histones",
     seed = 2025,
     percent_steps = seq(10, 100, by = 10),
     min_fragment_length = 50,
