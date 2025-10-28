@@ -11,7 +11,7 @@ HISTONE_MARKS=("H3K27ac" "H3K27me3" "H3K4me1" "H3K4me2" "H3K4me3" "H3K9me3")
 CELL_TYPES=("B" "CD4T" "CD8T" "DC" "Mono" "NK" "otherT" "other")
 
 # Base directory - use absolute path or $HOME
-BASE_DIR="$HOME/project_scHMTF/GSE195725_processed_data/splitbam_realbam"
+BASE_DIR="$HOME/project_scHMTF/hs_processed_data/splitbam_realbam"
 
 echo "####################################################################################################################"
 echo "### STARTING BAM SPLITTING FOR ALL HISTONE MARKS"
@@ -189,7 +189,7 @@ declare -A CELLTYPES_MAP=(
 )
 
 # Base directory - use absolute path or $HOME
-BASE_DIR="$HOME/project_scHMTF/GSE157637_processed_data/splitbam_realbam"  # Fixed for MouseBrain data
+BASE_DIR="$HOME/project_scHMTF/mm_processed_data/splitbam_realbam"  # Fixed for MouseBrain data
 
 echo "####################################################################################################################"
 echo "### STARTING BAM SPLITTING FOR ALL HISTONE MARKS - MOUSE BRAIN"
