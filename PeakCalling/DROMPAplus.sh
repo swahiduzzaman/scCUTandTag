@@ -1,90 +1,207 @@
 #!/bin/bash
-#######################################################################
-# DROMPAplus Peak Calling: Compact Version
-# Broad (PC_BROAD) and Sharp (PC_SHARP) peaks
-# Works with or without input BAMs
-#######################################################################
+###############################################################################################################
+### DROMPAplus Peak Calling WITH Control (Input bigWig files)
+### Human PBMC real BAMs
+###############################################################################################################
 
 #------------------------------------------
-# Histones and cell types
+# Histone marks
 #------------------------------------------
-histones=("H3K27ac" "H3K27me3" "H3K4me1" "H3K4me2" "H3K4me3" "H3K9me3")
-cells=("B" "CD4T" "CD8T" "DC" "Mono" "NK" "otherT" "other")
+BROAD_MARKS=("H3K27ac" "H3K27me3" "H3K9me3")
+SHARP_MARKS=("H3K27ac" "H3K4me1" "H3K4me2" "H3K4me3")
+
+#------------------------------------------
+# Cell types
+#------------------------------------------
+CELLTYPES=("B" "CD4T" "CD8T" "DC" "Mono" "NK" "otherT" "other")
 
 #------------------------------------------
 # Base directories
 #------------------------------------------
-BASE_DIR=~/project_scHMTF/GSE195725_processed_data/splitbam_realbam/HumanPBMC_peakbed/DROMPAplus_peakbed
-REF_GENOME=~/project_scHMTF/GSE195725_processed_data/ref/genome_file.txt
-REF_FLAT=~/project_scHMTF/GSE195725_processed_data/ref/refFlat.dupremoved.txt
+BASE_DIR="/home/wahid/project_scHMTF/GSE195725_processed_data/splitbam_realbam"
+REF_DIR="/home/wahid/project_scHMTF/GSE195725_processed_data/ref"
+GENOME_FILE="${REF_DIR}/genome_file.txt"
+GENE_ANNOT="${REF_DIR}/refFlat.dupremoved.txt"
 
-#------------------------------------------
-# Peak calling parameters
-#------------------------------------------
-LPP=5
-SHOWITAG=1
-CALLPEAK="--callpeak"
-PTHRE_INTERNAL_WITH_INPUT=4
-PTHRE_INTERNAL_NO_INPUT=5
-PTHRE_ENRICH_WITH_INPUT=3
+THREADS=32
 
-#------------------------------------------
-# Function: run DROMPAplus
-#------------------------------------------
+###############################################################################################################
+# Function to run DROMPAplus
+###############################################################################################################
 run_drompa() {
-    local histone=$1
-    local peak_type=$2      # PC_BROAD or PC_SHARP
-    local with_input=$3     # "yes" or "no"
-    
-    # cd into histone folder
-    local histone_dir="${BASE_DIR}/${histone}"
-    cd "$histone_dir" || { echo "⚠️ Cannot cd to $histone_dir"; return; }
+    local histone="$1"
+    local mode="$2"
+    local P_INT P_ENR
 
-    # parse2wigdir+ path inside this folder
-    local PARSE_DIR="./parse2wigdir+"
+    if [[ "$mode" == "BROAD" ]]; then
+        P_INT=4
+        P_ENR=3
+    else
+        P_INT=5
+        P_ENR=4
+    fi
 
-    # output directory
-    local out_dir="${histone_dir}/peakbed_${with_input}_${peak_type}/DROMPAplus"
-    mkdir -p "$out_dir"
+    echo "===================================================================="
+    echo "Processing $histone ($mode)"
+    echo "===================================================================="
 
-    # internal threshold
-    local pthre_internal=$([ "$with_input" == "yes" ] && echo $PTHRE_INTERNAL_WITH_INPUT || echo $PTHRE_INTERNAL_NO_INPUT)
-    local pthre_enrich=$([ "$with_input" == "yes" ] && echo $PTHRE_ENRICH_WITH_INPUT || echo 0)
+    local HISTONE_DIR="${BASE_DIR}/HumanPBMC_peakbed/DROMPAplus_peakbed/${histone}"
+    local PARSE_DIR="${HISTONE_DIR}/parse2wigdir+"
+    local OUT_DIR="${HISTONE_DIR}/peakbed_with_input_${mode,,}/DROMPAplus"
+    mkdir -p "$OUT_DIR"
 
-    # build input arguments
-    local args=()
-    for cell in "${cells[@]}"; do
-        if [ "$with_input" == "yes" ]; then
-            args+=("-i $PARSE_DIR/${histone}.${cell}.100.bw, $PARSE_DIR/input.${cell}.100.bw, ${histone},,,100")
+    local INPUTS=""
+    for cell in "${CELLTYPES[@]}"; do
+        local label=""
+
+        # H3K27ac special naming
+        if [[ "$histone" == "H3K27ac" ]]; then
+            if [[ "$mode" == "BROAD" ]]; then
+                label="${histone}-b_${cell}"
+            else
+                label="${histone}-s_${cell}"
+            fi
         else
-            args+=("-i $PARSE_DIR/${histone}.${cell}.100.bw, ${histone},,,100")
+            label="${histone}_${cell}"
         fi
+
+        INPUTS+=" -i ${PARSE_DIR}/${histone}.${cell}.100.bw,${PARSE_DIR}/input.${cell}.100.bw,${label},,,100"
     done
 
-    # run DROMPAplus
-    drompa+ "$peak_type" \
-        "${args[@]}" \
-        -o "$out_dir" \
-        --gt "$REF_GENOME" \
-        -g "$REF_FLAT" \
-        --lpp $LPP \
-        --showitag $SHOWITAG \
-        $CALLPEAK \
-        --pthre_internal $pthre_internal \
-        $( [ "$with_input" == "yes" ] && echo "--pthre_enrich $pthre_enrich" )
+    drompa+ PC_${mode} \
+        ${INPUTS} \
+        -o "${OUT_DIR}" \
+        --gt "${GENOME_FILE}" \
+        -g "${GENE_ANNOT}" \
+        --lpp 5 --showitag 1 --callpeak \
+        --pthre_internal "${P_INT}" \
+        --pthre_enrich "${P_ENR}"
 
-    echo "✅ Finished $histone ($peak_type, with_input=$with_input)"
+    echo "✅ Done: $histone ($mode)"
+    echo
+}
+
+###############################################################################################################
+# Main loop over histones
+###############################################################################################################
+for histone in "${BROAD_MARKS[@]}" "${SHARP_MARKS[@]}"; do
+    if [[ "$histone" == "H3K27ac" ]]; then
+        # Run both broad and sharp for H3K27ac
+        run_drompa "$histone" "BROAD"
+        run_drompa "$histone" "SHARP"
+    elif [[ " ${BROAD_MARKS[@]} " =~ " ${histone} " ]]; then
+        run_drompa "$histone" "BROAD"
+    else
+        run_drompa "$histone" "SHARP"
+    fi
+done
+
+#!/bin/bash
+###############################################################################################################
+### DROMPAplus Peak Calling WITH Control (Input bigWig files)
+### MouseBrain real BAMs
+###############################################################################################################
+
+#------------------------------------------
+# Histone marks
+#------------------------------------------
+BROAD_MARKS=("H3K27ac" "H3K27me3" "H3K36me3")
+SHARP_MARKS=("H3K27ac" "H3K4me3" "Olig2" "Rad21")
+
+#------------------------------------------
+# Function: define cell types per histone mark
+#------------------------------------------
+get_celltypes_for_mark() {
+  local MARK="$1"
+  case "$MARK" in
+    H3K27ac) CELLTYPES=("Astrocytes" "mOL" "OEC" "OPC" "VLMC") ;;
+    H3K27me3) CELLTYPES=("Astrocytes" "Microglia" "mOL" "Neurons1" "Neurons3" "OEC" "OPC" "VLMC") ;;
+    H3K36me3) CELLTYPES=("Astrocytes" "mOL" "OEC" "OPC") ;;
+    H3K4me3) CELLTYPES=("Astrocytes" "Microglia" "mOL" "Neurons1" "Neurons2" "Neurons3" "OEC" "OPC" "VLMC") ;;
+    Olig2) CELLTYPES=("Astrocytes" "mOL" "OEC" "Unknown") ;;
+    Rad21) CELLTYPES=("Astrocytes" "mOL" "OEC" "Unknown") ;;
+    *) echo "Unknown mark: $MARK"; CELLTYPES=() ;;
+  esac
 }
 
 #------------------------------------------
-# Main loop over histones
+# Base directories
 #------------------------------------------
-for histone in "${histones[@]}"; do
-    # Broad peaks
-    run_drompa "$histone" "PC_BROAD" "yes"
-    run_drompa "$histone" "PC_BROAD" "no"
-    
-    # Sharp peaks
-    run_drompa "$histone" "PC_SHARP" "yes"
-    run_drompa "$histone" "PC_SHARP" "no"
+BASE_DIR="/home/wahid/project_scHMTF/GSE157637_processed_data/splitbam_realbam"
+REF_DIR="/home/wahid/project_scHMTF/GSE157637_processed_data/ref"
+GENOME_FILE="${REF_DIR}/mm10.genome_file.txt"
+GENE_ANNOT="${REF_DIR}/refFlat.dupremoved.txt"
+
+THREADS=32
+
+###############################################################################################################
+# Function to run DROMPAplus
+###############################################################################################################
+run_drompa() {
+    local histone="$1"
+    local mode="$2"
+    local P_INT P_ENR
+
+    if [[ "$mode" == "BROAD" ]]; then
+        P_INT=4
+        P_ENR=3
+    else
+        P_INT=5
+        P_ENR=4
+    fi
+
+    echo "===================================================================="
+    echo "Processing $histone ($mode)"
+    echo "===================================================================="
+
+    local HISTONE_DIR="${BASE_DIR}/MouseBrain_peakbed/DROMPAplus_peakbed/${histone}"
+    local PARSE_DIR="${HISTONE_DIR}/parse2wigdir+"
+    local OUT_DIR="${HISTONE_DIR}/peakbed_with_input_${mode,,}/DROMPAplus"
+    mkdir -p "$OUT_DIR"
+
+    local INPUTS=""
+    for cell in "${CELLTYPES[@]}"; do
+        local label=""
+
+        # H3K27ac special naming
+        if [[ "$histone" == "H3K27ac" ]]; then
+            if [[ "$mode" == "BROAD" ]]; then
+                label="${histone}-b_${cell}"
+            else
+                label="${histone}-s_${cell}"
+            fi
+        else
+            label="${histone}_${cell}"
+        fi
+
+        INPUTS+=" -i ${PARSE_DIR}/${histone}.${cell}.100.bw,${PARSE_DIR}/input.${cell}.100.bw,${label},,,100"
+    done
+
+    drompa+ PC_${mode} \
+        ${INPUTS} \
+        -o "${OUT_DIR}" \
+        --gt "${GENOME_FILE}" \
+        -g "${GENE_ANNOT}" \
+        --lpp 5 --showitag 1 --callpeak \
+        --pthre_internal "${P_INT}" \
+        --pthre_enrich "${P_ENR}"
+
+    echo "✅ Done: $histone ($mode)"
+    echo
+}
+
+###############################################################################################################
+# Main loop over histones
+###############################################################################################################
+for histone in "${BROAD_MARKS[@]}" "${SHARP_MARKS[@]}"; do
+    get_celltypes_for_mark "$histone"
+
+    if [[ "$histone" == "H3K27ac" ]]; then
+        run_drompa "$histone" "BROAD"
+        run_drompa "$histone" "SHARP"
+    elif [[ " ${BROAD_MARKS[@]} " =~ " ${histone} " ]]; then
+        run_drompa "$histone" "BROAD"
+    else
+        run_drompa "$histone" "SHARP"
+    fi
 done
