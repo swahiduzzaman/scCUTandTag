@@ -1,13 +1,8 @@
 <img width="568" height="796" alt="image" src="https://github.com/user-attachments/assets/206f5092-589d-4ff5-a74a-21c3794ae1eb" />
 
-
-
-
-
-
 # scTAGPEAKBENCH: a benchmark suite for scCUT&Tag peak-calling across diverse epigenomic contexts
 
-scTAGPEAKBENCH: is a fully reproducible benchmarking framework designed to systematically evaluate seven widely used peak-calling algorithms on single-cell CUT&Tag (scCUT&Tag) datasets.
+**scTAGPEAKBENCH** is a fully reproducible benchmarking framework designed to systematically evaluate seven widely used peak-calling algorithms on single-cell CUT&Tag (scCUT&Tag) datasets.
 The pipeline benchmarks the following tools:
 
 **DROMPAplus**
@@ -29,9 +24,5 @@ By applying these seven tools to multiple histone modifications and transcriptio
 
 ## Key Features
 1. Unified peak-calling interface
-
-Standardized preprocessing of scCUT&Tag fragments and pseudo-bulk BAMs
-
-Harmonized parameters across all seven tools
-
-One-command execution with modular configuration
+For each cell type, we constructed a pseudo-input by pooling fragments from all remaining cell types.
+In this design, the input control for a given cell type is derived from the complementary cell populations. This cross–cell-type input strategy provides a balanced background signal, reduces cell-type–specific bias, and improves the robustness of peak calling in scCUT&Tag data.
