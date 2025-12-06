@@ -5,6 +5,5 @@
 
 
 
-# Comprehensive benchmarking delineates the performance of scCUT&Tag peak callers across several epigenomic contexts
-
+# scTAGPEAKBENCH: a benchmark suite for scCUT&Tag peak-calling across diverse epigenomic contexts
 
