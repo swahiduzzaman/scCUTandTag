@@ -7,3 +7,5 @@
 
 # scTAGPEAKBENCH: a benchmark suite for scCUT&Tag peak-calling across diverse epigenomic contexts
 
+scTAGPEAKBENCH: is a fully reproducible benchmarking framework designed to systematically evaluate seven widely used peak-calling algorithms on single-cell CUT&Tag (scCUT&Tag) datasets.
+
