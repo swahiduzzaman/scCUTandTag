@@ -1,4 +1,5 @@
-<img width="568" height="796" alt="image" src="https://github.com/user-attachments/assets/206f5092-589d-4ff5-a74a-21c3794ae1eb" />
+<img width="136" height="122" alt="image" src="https://github.com/user-attachments/assets/8dbb754a-9b00-4c94-86cd-26357f08d75f" />
+
 
 # scTAGPEAKBENCH: a benchmark suite for scCUT&Tag peak-calling across diverse epigenomic contexts
 
