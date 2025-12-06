@@ -26,3 +26,12 @@ SICER2
 
 By applying these seven tools to multiple histone modifications and transcriptional factors (e.g., H3K27ac, H3K27me3, H3K36me3, H3K9me3, H3K4me1, H3K4me2, H3K4me3, Olig2, Rad21), the pipeline captures performance differences across broad, and sharp (narrow) epigenomic contexts.
 
+
+## Key Features
+1. Unified peak-calling interface
+
+Standardized preprocessing of scCUT&Tag fragments and pseudo-bulk BAMs
+
+Harmonized parameters across all seven tools
+
+One-command execution with modular configuration
