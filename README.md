@@ -1,9 +1,9 @@
 <img width="136" height="122" alt="image" src="https://github.com/user-attachments/assets/8dbb754a-9b00-4c94-86cd-26357f08d75f" />
 
 
-# scTAGPEAKBENCH: a benchmark suite for scCUT&Tag peak-calling across diverse epigenomic contexts
+# scCTPEAK: a benchmark suite for scCUT&Tag peak-calling across diverse epigenomic contexts
 
-**scTAGPEAKBENCH** is a fully reproducible benchmarking framework designed to systematically evaluate seven widely used peak-calling algorithms on single-cell CUT&Tag (scCUT&Tag) datasets.
+**scCTPEAK** is a fully reproducible benchmarking framework designed to systematically evaluate seven widely used peak-calling algorithms on single-cell CUT&Tag (scCUT&Tag) datasets.
 The pipeline benchmarks the following tools:
 
 **DROMPAplus**
